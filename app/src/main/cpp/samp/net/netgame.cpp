@@ -665,86 +665,86 @@ void CNetGame::Packet_ConnectionLost(Packet *pkt)
 	MicroIcon::Hide();
 }
 // 0.3.7
-void CNetGame::Packet_PlayerSync(Packet *pkt)
+// https://github.com/plakapenka/sasamp/blob/v_2_1/app/src/main/cpp/libsamp/net/netgame.cpp
+void CNetGame::Packet_PlayerSync(Packet* pkt)
 {
-	RakNet::BitStream bsData(pkt->data, pkt->length, false);
-	ONFOOT_SYNC_DATA ofSync;
-	uint32_t dwTime = 0;
-	uint8_t bytePacketId;
-	PLAYERID playerId;
+    RakNet::BitStream bsPlayerSync((unsigned char *)pkt->data, pkt->length, false);
+    ONFOOT_SYNC_DATA ofSync;
+    uint8_t bytePacketID=0;
+    PLAYERID playerId;
 
-	bool bHasLR, bHasUD;
+    bool bHasLR,bHasUD;
+    bool bHasVehicleSurfingInfo;
 
-	if (GetGameState() != GAMESTATE_CONNECTED) return;
+    if(GetGameState() != GAMESTATE_CONNECTED) return;
 
-	memset(&ofSync, 0, sizeof(ONFOOT_SYNC_DATA));
+    memset(&ofSync, 0, sizeof(ONFOOT_SYNC_DATA));
 
-	bsData.Read(bytePacketId);
-	bsData.Read(playerId);
+    bsPlayerSync.Read(bytePacketID);
+    bsPlayerSync.Read(playerId);
 
-	bsData.Read(bHasLR);
-	if (bHasLR) {
-		bsData.Read(ofSync.lrAnalog);
-	}
+    // LEFT/RIGHT KEYS
+    bsPlayerSync.Read(bHasLR);
+    if(bHasLR) bsPlayerSync.Read(ofSync.lrAnalog);
 
-	bsData.Read(bHasUD);
-	if (bHasUD) {
-		bsData.Read(ofSync.udAnalog);
-	}
+    // UP/DOWN KEYS
+    bsPlayerSync.Read(bHasUD);
+    if(bHasUD) bsPlayerSync.Read(ofSync.udAnalog);
 
-	bsData.Read(ofSync.wKeys);
-	bsData.Read((char*)&ofSync.vecPos, sizeof(CVector));
-	float w, x, y, z;
-	bsData.ReadNormQuat(w, x, y, z);
-	ofSync.quat.Set(x, y, z, w);
+    // GENERAL KEYS
+    bsPlayerSync.Read(ofSync.wKeys);
 
-	uint8_t byteHealthArmour;
-	uint8_t byteArmTemp = 0, byteHlTemp = 0;
-	
-	bsData.Read(byteHealthArmour);
-	byteArmTemp = (byteHealthArmour & 0x0F);
-	byteHlTemp = (byteHealthArmour >> 4);
+    // CVector POS
+    bsPlayerSync.Read((char*)&ofSync.vecPos,sizeof(CVector));
 
-	if (byteArmTemp == 0xF) ofSync.byteArmour = 100;
-	else if (byteArmTemp == 0) ofSync.byteArmour = 0;
-	else ofSync.byteArmour = byteArmTemp * 7;
+    // QUATERNION
+    float tw, tx, ty, tz;
+    bsPlayerSync.ReadNormQuat(tw, tx, ty, tz);
+    ofSync.quat.w = tw;
+    ofSync.quat.x = tx;
+    ofSync.quat.y = ty;
+    ofSync.quat.z = tz;
 
-	if (byteHlTemp == 0xF) ofSync.byteHealth = 100;
-	else if (byteHlTemp == 0) ofSync.byteHealth = 0;
-	else ofSync.byteHealth = byteHlTemp * 7;
+    // HEALTH/ARMOUR (COMPRESSED INTO 1 BYTE)
+    uint8_t byteHealthArmour;
+    uint8_t byteArmTemp=0,byteHlTemp=0;
 
-	uint8_t byteCurrentWeapon = 0;
-	bsData.Read(byteCurrentWeapon);
-	ofSync.byteCurrentWeapon ^= (byteCurrentWeapon ^ ofSync.byteCurrentWeapon) & 0x3F;
+    bsPlayerSync.Read(byteHealthArmour);
+    byteArmTemp = (byteHealthArmour & 0x0F);
+    byteHlTemp = (byteHealthArmour >> 4);
 
-	bsData.Read(ofSync.byteSpecialAction);
-	bsData.ReadVector(ofSync.vecMoveSpeed.x, ofSync.vecMoveSpeed.y, ofSync.vecMoveSpeed.z);
+    if(byteArmTemp == 0xF) ofSync.byteArmour = 100;
+    else if(byteArmTemp == 0) ofSync.byteArmour = 0;
+    else ofSync.byteArmour = byteArmTemp * 7;
 
-	bool bHasVehicleSurfingInfo;
-	bsData.Read(bHasVehicleSurfingInfo);
-	if (bHasVehicleSurfingInfo)
-	{
-		bsData.Read(ofSync.wSurfID);
-		bsData.Read(ofSync.vecSurfOffsets.x);
-		bsData.Read(ofSync.vecSurfOffsets.y);
-		bsData.Read(ofSync.vecSurfOffsets.z);
-	}
-	else
-		ofSync.wSurfID = INVALID_VEHICLE_ID;
+    if(byteHlTemp == 0xF) ofSync.byteHealth = 100;
+    else if(byteHlTemp == 0) ofSync.byteHealth = 0;
+    else ofSync.byteHealth = byteHlTemp * 7;
 
-	bool bHasAnimation;
-	bsData.Read(bHasAnimation);
-	if (bHasAnimation) {
-		bsData.Read(ofSync.dwAnimation);
-	}
-	else {
-		ofSync.dwAnimation = 0x80000000;
-	}
+    // CURRENT WEAPON
+    bsPlayerSync.Read(ofSync.byteCurrentWeapon);
+    // SPECIAL ACTION
+    bsPlayerSync.Read(ofSync.byteSpecialAction);
 
-	CRemotePlayer *pRemotePlayer = GetPlayerPool()->GetAt(playerId);
-	if (pRemotePlayer) {
-		pRemotePlayer->StoreOnFootFullSyncData(&ofSync, 0);
-	}
+    // READ MOVESPEED VECTORS
+    bsPlayerSync.ReadVector(tx, ty, tz);
+    ofSync.vecMoveSpeed.x = tx;
+    ofSync.vecMoveSpeed.y = ty;
+    ofSync.vecMoveSpeed.z = tz;
+
+    bsPlayerSync.Read(bHasVehicleSurfingInfo);
+    if (bHasVehicleSurfingInfo)
+    {
+        bsPlayerSync.Read(ofSync.vecSurfOffsets.x);
+        bsPlayerSync.Read(ofSync.vecSurfOffsets.y);
+        bsPlayerSync.Read(ofSync.vecSurfOffsets.z);
+    }
+
+    //uint8_t key = 0;
+
+    CRemotePlayer *pRemotePlayer = GetPlayerPool()->GetAt(playerId);
+    if(pRemotePlayer)
+        pRemotePlayer->StoreOnFootFullSyncData(&ofSync, 0);
 }
 // 0.3.7
 void CNetGame::Packet_VehicleSync(Packet* pkt)
