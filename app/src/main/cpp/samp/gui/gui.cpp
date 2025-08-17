@@ -44,12 +44,6 @@ bool UI::initialize()
 	m_chat->setItemSize(UISettings::chatItemSize());
 	m_chat->setVisible(false);
 
-	m_buttonPanel = new ButtonPanel();
-	this->addChild(m_buttonPanel);
-	m_buttonPanel->setFixedSize(UISettings::buttonPanelSize());
-	m_buttonPanel->setPosition(UISettings::buttonPanelPos());
-	m_buttonPanel->setVisible(false);
-
 	m_voiceButton = new VoiceButton();
 	this->addChild(m_voiceButton);
 	m_voiceButton->setFixedSize(UISettings::buttonVoiceSize());
@@ -130,11 +124,6 @@ void UI::drawList()
 {
 	if (!visible()) return;
 
-	/*Label* label;
-	label = new Label("1.0.11", ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 2);
-	label->setPosition(ImVec2(0.0, 0.0));
-	this->addChild(label);*/
-
 	if (pPlayerTags) pPlayerTags->Render(renderer());
 	if (pNetGame && pNetGame->GetTextLabelPool()) pNetGame->GetTextLabelPool()->Render(renderer());
 	if (pNetGame && pNetGame->GetPlayerBubblePool()) pNetGame->GetPlayerBubblePool()->Render(renderer());
@@ -159,59 +148,6 @@ void UI::touchEvent(const ImVec2& pos, TouchType type)
 	}
 
 	Widget::touchEvent(pos, type);
-}
-
-enum eTouchType
-{
-	TOUCH_POP = 1,
-	TOUCH_PUSH = 2,
-	TOUCH_MOVE = 3
-};
-
-bool UI::OnTouchEvent(int type, bool multi, int x, int y)
-{
-	ImGuiIO& io = ImGui::GetIO();
-
-	/*
-	switch (type)
-	{
-	case 1://TOUCH_PUSH:
-		io.MousePos = ImVec2(x, y);
-		io.MouseDown[0] = true;
-		MyLog2("TOUCH_PUSH");
-		break;
-
-	case 2://TOUCH_POP:
-		io.MouseDown[0] = false;
-		m_bNeedClearMousePos = true;
-		MyLog2("TOUCH_POP");
-		break;
-
-	case 3://TOUCH_MOVE:
-		io.MousePos = ImVec2(x, y);
-		MyLog2("TOUCH_MOVE");
-		break;
-	}*/
-	VoiceButton* vbutton = pUI->voicebutton();
-	switch (type)
-	{
-	case TOUCH_PUSH:
-		io.MousePos = ImVec2(x, y);
-		io.MouseDown[0] = true;
-		break;
-
-	case TOUCH_POP:
-		io.MouseDown[0] = false;
-		m_bNeedClearMousePos = true;
-		break;
-
-	case TOUCH_MOVE:
-		io.MousePos = ImVec2(x, y);
-		//if (vbutton->countdown > 50) vbutton->countdown = 20;
-		break;
-	}
-
-	return true;
 }
 
 #include "../settings.h"
@@ -280,15 +216,6 @@ void UI::renderDebug()
 
         label4->setText(&debugPools[0]);
         label4->setPosition(pos);
-}
-
-void UI::PushToBufferedQueueTextDrawPressed(uint16_t textdrawId)
-{
-    BUFFERED_COMMAND_TEXTDRAW* pCmd = m_BufferedCommandTextdraws.WriteLock();
-
-    pCmd->textdrawId = textdrawId;
-
-    m_BufferedCommandTextdraws.WriteUnlock();
 }
 
 void UI::ProcessPushedTextdraws()

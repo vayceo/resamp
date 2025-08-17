@@ -45,10 +45,6 @@ public:
 	static float dialogTitleHeight() { return m_dialogTitleHeight; }
 	static float dialogListItemHeight() { return m_dialogListItemHeight; }
 
-	/* buttonpanel */
-	static ImVec2 buttonPanelPos() { return m_buttonPanelPos; }
-	static ImVec2 buttonPanelSize() { return m_buttonPanelSize; }
-
 	/* voice button */
 	static ImVec2 buttonVoicePos() { return m_buttonVoicePos; }
 	static ImVec2 buttonVoiceSize() { return m_buttonVoiceSize; }
@@ -111,10 +107,6 @@ private:
 	static ImVec2 m_dialogMaxSize;
 	static float m_dialogTitleHeight;
 	static float m_dialogListItemHeight;
-
-	/* buttonpanel */
-	static ImVec2 m_buttonPanelPos;
-	static ImVec2 m_buttonPanelSize;
 
 	/* voice button */
 	static ImVec2 m_buttonVoicePos;

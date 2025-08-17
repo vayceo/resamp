@@ -1225,7 +1225,6 @@ bool CLocalPlayer::HandlePassengerEntry()
 	//int isHeldDown = ((int (*)(int, bool, int))(g_libGTASA + 0x2B2068 + 1))(0, true, 1);
 	//if (!isHeldDown) return false;
 
-	if (!bNeedEnterVehicle) return false;
 	VEHICLEID ClosetVehicleID = pVehiclePool->FindNearestToLocalPlayerPed();
 	CVehicle* pVehicle = pVehiclePool->GetAt(ClosetVehicleID);
 	if (!pVehicle) return false;
@@ -1238,35 +1237,9 @@ bool CLocalPlayer::HandlePassengerEntry()
 
 		m_pPlayerPed->EnterVehicle(pVehicle->m_dwGTAId, true);
 		SendEnterVehicleNotification(ClosetVehicleID, true);
-		bNeedEnterVehicle = false;
 	}
-	bNeedEnterVehicle = false;
 	return true;
 }
-
-bool CLocalPlayer::GbuttonEnterVehicleAsPassenger()
-{
-	CVehiclePool* pVehiclePool = pNetGame->GetVehiclePool();
-	if (!bNeedEnterVehicle) return false;
-	VEHICLEID ClosetVehicleID = pVehiclePool->FindNearestToLocalPlayerPed();
-	CVehicle* pVehicle = pVehiclePool->GetAt(ClosetVehicleID);
-	if (!pVehicle) return false;
-
-	if (pVehicle->m_pVehicle->GetDistanceFromLocalPlayerPed() < 8.0f)
-	{
-		if (m_pPlayerPed->GetCurrentWeapon() == WEAPON_PARACHUTE) {
-			m_pPlayerPed->SetArmedWeapon(0, false);
-		}
-
-		m_pPlayerPed->EnterVehicle(pVehicle->m_dwGTAId, true);
-		SendEnterVehicleNotification(ClosetVehicleID, true);
-		bNeedEnterVehicle = false;
-		return true;
-	}
-	bNeedEnterVehicle = false;
-	return false;
-}
-
 
 bool CLocalPlayer::EnterVehicleAsDriver()
 {

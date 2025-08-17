@@ -54,10 +54,6 @@ ImVec2 UISettings::m_dialogMaxSize = ImVec2(620.0f, 400.0f);
 float UISettings::m_dialogTitleHeight = 20.0f;
 float UISettings::m_dialogListItemHeight = 30.0f;
 
-/* buttonpanel */
-ImVec2 UISettings::m_buttonPanelPos = ImVec2(5.0f, 140.0f/*150.0f*/);
-ImVec2 UISettings::m_buttonPanelSize = ImVec2(380.0f/*250.0f*//*180.0f*//*250.0f*/, 50.0f); //ImVec2(120.0f, 45.0f);
-
 /* voice button */
 ImVec2 UISettings::m_buttonVoicePos = ImVec2(500.0f, 180.0f/*170.0f*/);
 ImVec2 UISettings::m_buttonVoiceSize = ImVec2(55.0f, 80.0f);
@@ -117,10 +113,6 @@ void UISettings::Initialize(const ImVec2& display_size)
 	m_dialogMaxSize = m_dialogMaxSize * m_scaleFactor;
 	m_dialogTitleHeight *= m_scaleFactor.y;
 	m_dialogListItemHeight *= m_scaleFactor.y;
-
-	/* buttonpanel */
-	m_buttonPanelPos = m_buttonPanelPos * m_scaleFactor;
-	m_buttonPanelSize = m_buttonPanelSize * m_scaleFactor;
 
 	/* button voice */
 	m_buttonVoicePos = m_buttonVoicePos * m_scaleFactor;

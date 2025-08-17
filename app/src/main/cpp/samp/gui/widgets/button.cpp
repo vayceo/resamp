@@ -2,8 +2,6 @@
 #include "..//gui.h"
 #include "button.h"
 
-extern bool OpenButton;
-
 Button::Button(const std::string& caption, float font_size)
 {
 	m_callback = nullptr;
@@ -68,8 +66,6 @@ void CButton::performLayout()
 
 void CButton::draw(ImGuiRenderer* renderer)
 {
-	if (OpenButton == false) return;
-
 	renderer->drawRect(absolutePosition(), absolutePosition() + size(),
 		focused() ? m_colorFocused : m_color, true);
 
@@ -113,13 +109,6 @@ void OButton::performLayout()
 
 void OButton::draw(ImGuiRenderer* renderer)
 {
-	if (OpenButton == true)
-	{
-		//Set >> to hide position
-		this->setPosition(ImVec2(-150.0f, -150.0f));
-		return;
-	}
-
 	renderer->drawRect(absolutePosition(), absolutePosition() + size(),
 		focused() ? m_colorFocused : m_color, true);
 

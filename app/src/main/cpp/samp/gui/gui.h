@@ -21,7 +21,6 @@
 #include "samp_widgets/splashscreen.h"
 #include "samp_widgets/chat.h"
 #include "samp_widgets/spawn.h"
-#include "samp_widgets/buttonpanel.h"
 #include "samp_widgets/playerTabList.h"
 #include "samp_widgets/voicebutton.h"
 
@@ -51,7 +50,6 @@ public:
 	Spawn* spawn() const { return m_spawn; }
 	Keyboard* keyboard() const { return m_keyboard; }
 	Dialog* dialog() const { return m_dialog; }
-	ButtonPanel* buttonpanel() const { return m_buttonPanel; }
 	PlayerTabList* playertablist() const { return m_playerTabList; }
 	VoiceButton* voicebutton() const { return m_voiceButton; }
 
@@ -93,7 +91,6 @@ private:
 	Chat* m_chat;
 	Spawn* m_spawn;
 	Dialog* m_dialog;
-	ButtonPanel* m_buttonPanel;
 	PlayerTabList* m_playerTabList;
 	VoiceButton* m_voiceButton;
 	Label* label;
