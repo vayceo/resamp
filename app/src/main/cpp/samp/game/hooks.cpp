@@ -1612,5 +1612,7 @@ void InstallHooks()
 
     CHook::InlineHook("_ZN10CStreaming5Init2Ev", &CStreaming__Init2_hook, &CStreaming__Init2);
 
+    CHook::InlineHook("mpg123_param", &mpg123_param_hook, &mpg123_param);
+
     HookCPad();
 }
