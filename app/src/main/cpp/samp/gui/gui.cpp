@@ -146,12 +146,7 @@ void UI::drawList()
 
 void UI::touchEvent(const ImVec2& pos, TouchType type)
 {
-	/* 
-		� ������� ����������
-		1 - ����������
-		2 - ������
-		3 - ���
-	*/
+    if (!visible()) return;
 
 	if (m_keyboard->visible() && m_keyboard->contains(pos))
 	{
