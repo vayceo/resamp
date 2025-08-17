@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 23.11.2023.
+// Created by resamp on 23.11.2023.
 //
 
 #include "NodeName.h"

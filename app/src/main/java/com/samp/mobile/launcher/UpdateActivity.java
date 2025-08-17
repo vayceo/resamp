@@ -83,7 +83,7 @@ public class UpdateActivity extends AppCompatActivity{
                 UpdateActivity.UpdateStatus valueOf = UpdateActivity.UpdateStatus.valueOf(msg.getData().getString("status", ""));
                 if (valueOf == UpdateStatus.DownloadGameData) {
                     ((TextView)findViewById(R.id.installation_text)).setText("Updating game data...");
-                    Log.d("x1y2z", "statusname = " + valueOf);
+                    Log.d("resamp", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
                     ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
@@ -96,7 +96,7 @@ public class UpdateActivity extends AppCompatActivity{
 
                     ((TextView) findViewById(R.id.fileProgressPercent)).setText(j2*100/(j+1) + "%");
                 } else if (valueOf == UpdateActivity.UpdateStatus.CheckUpdate) {
-                    Log.d("x1y2z", "statusname = " + valueOf);
+                    Log.d("resamp", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
                     ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
@@ -105,7 +105,7 @@ public class UpdateActivity extends AppCompatActivity{
                     progressBar.setProgress((int) (j2)/1048576);
                 } else if (valueOf == UpdateStatus.DownloadGame) {
                     ((TextView)findViewById(R.id.installation_text)).setText("Updating game...");
-                    Log.d("x1y2z", "statusname = " + valueOf);
+                    Log.d("resamp", "statusname = " + valueOf);
                     long j = msg.getData().getLong("total");
                     long j2 = msg.getData().getLong("current");
                     ((TextView) findViewById(R.id.fileName)).setText(msg.getData().getString("filename"));
@@ -128,7 +128,7 @@ public class UpdateActivity extends AppCompatActivity{
             else if(msg.what == 2)
             {
                 Intent intent;
-                Log.d("x1y2z", "UpdateService.UPDATE_GAME_DATA");
+                Log.d("resamp", "UpdateService.UPDATE_GAME_DATA");
                 //resetProgress(true, 100, 100);
                 if (msg.getData().getBoolean("status", false)) {
                     String string3 = msg.getData().getString("apkPath", "");
@@ -136,7 +136,7 @@ public class UpdateActivity extends AppCompatActivity{
                         mGameApk = new File(string3);
                     }
                     if (mGameApk == null || !mGameApk.exists()) {
-                        Log.d("x1y2z", "Error update game data");
+                        Log.d("resamp", "Error update game data");
                         intent = new Intent(UpdateActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -158,7 +158,7 @@ public class UpdateActivity extends AppCompatActivity{
 
     void requestInstallGame()
     {
-        Log.d("x1y2z", "request install game");
+        Log.d("resamp", "request install game");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Uri uri = FileProvider.getUriForFile(getApplicationContext(),
@@ -232,8 +232,8 @@ public class UpdateActivity extends AppCompatActivity{
                     egputype = eGPUType.ETC;
                     mGpuType = 2;
                 }
-                Log.e("x1y2z", "GPU name: " + glGetString);
-                Log.e("x1y2z", "GPU type: " + egputype.name());
+                Log.e("resamp", "GPU name: " + glGetString);
+                Log.e("resamp", "GPU type: " + egputype.name());
 
                 mUpdateMode = UpdateMode.valueOf(getIntent().getStringExtra("mode"));
 

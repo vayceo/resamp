@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("x1y2z", "error " + error.toString());
+                Log.d("resamp", "error " + error.toString());
                 getServersInfo();
                 z[0] = false;
             }

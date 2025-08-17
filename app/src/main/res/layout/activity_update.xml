@@ -119,7 +119,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/montserrat_regular"
-        android:text="Copyright x1y2z"
+        android:text="Copyright resamp"
         android:textColor="#AEAEAE"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="parent"

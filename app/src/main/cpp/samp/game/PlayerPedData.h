@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 08.11.2023.
+// Created by resamp on 08.11.2023.
 //
 
 #ifndef LIVERUSSIA_PLAYERPEDDATA_H

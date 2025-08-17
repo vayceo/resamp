@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 18.10.2023.
+// Created by resamp on 18.10.2023.
 //
 
 #include "RealTimeShadow.h"

@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 27.04.2024.
+// Created by resamp on 27.04.2024.
 //
 
 #pragma once

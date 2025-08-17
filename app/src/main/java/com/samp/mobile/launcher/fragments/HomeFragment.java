@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
         yt_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bit.ly/x1y2z_yt"));
+                Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse("https://bit.ly/resamp_yt"));
                 startActivity(link);
             }
         });

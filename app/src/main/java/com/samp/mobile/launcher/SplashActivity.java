@@ -125,8 +125,8 @@ public class SplashActivity extends AppCompatActivity {
                         egputype = UpdateActivity.eGPUType.ETC;
                         mGpuType = 2;
                     }
-                    Log.e("x1y2z", "GPU name: " + glGetString);
-                    Log.e("x1y2z", "GPU type: " + egputype.name());
+                    Log.e("resamp", "GPU name: " + glGetString);
+                    Log.e("resamp", "GPU type: " + egputype.name());
 
                     if (isPermissionsGranted()) {
                         mIsBind = bindService(new Intent(SplashActivity.this, UpdateService.class), mConnection, Context.BIND_AUTO_CREATE);
@@ -182,7 +182,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             } else if (msg.what == 5) {
                 UpdateActivity.GameStatus valueOf2 = UpdateActivity.GameStatus.valueOf(msg.getData().getString("status", ""));
-                Log.i("x1y2z", "gameStatus = " + valueOf2);
+                Log.i("resamp", "gameStatus = " + valueOf2);
 
                 if (valueOf2 == UpdateActivity.GameStatus.UpdateRequired) {
                     if(!new SharedPreferenceCore().getBoolean(SplashActivity.this, "MODIFIED_DATA")) {
@@ -233,7 +233,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void checkUpdate() {
-        Log.d("x1y2z", "checkUpdate");
+        Log.d("resamp", "checkUpdate");
         Message obtain = Message.obtain((Handler) null, 0);
         obtain.getData().putInt("gputype", mGpuType);
         obtain.replyTo = mMessenger;

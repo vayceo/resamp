@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 20.04.2023.
+// Created by resamp on 20.04.2023.
 //
 #include "../common.h"
 #include "Placeable.h"

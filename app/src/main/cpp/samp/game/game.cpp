@@ -647,15 +647,6 @@ bool CGame::InitialiseRenderWare() {
     CTxdStore::Initialise();
     CVisibilityPlugins::Initialise();
 
-#if VER_SAMP
-    TextureDatabaseRuntime::Load("mobile", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("txd", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("gta3", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("gta_int", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("cutscene", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("player", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Load("menu", false, TextureDatabaseFormat::DF_ETC);
-#else
     TextureDatabaseRuntime::Load("samp", false, TextureDatabaseFormat::DF_ETC);
     TextureDatabaseRuntime::Load("mobile", false, TextureDatabaseFormat::DF_ETC);
     TextureDatabaseRuntime::Load("txd", false, TextureDatabaseFormat::DF_ETC);
@@ -663,20 +654,6 @@ bool CGame::InitialiseRenderWare() {
     TextureDatabaseRuntime::Load("gta_int", false, TextureDatabaseFormat::DF_ETC);
     TextureDatabaseRuntime::Load("player", false, TextureDatabaseFormat::DF_ETC);
     TextureDatabaseRuntime::Load("menu", false, TextureDatabaseFormat::DF_ETC);
-    //TextureDatabaseRuntime::Load("cutscene", false, TextureDatabaseFormat::DF_Default);
-
-    /*TextureDatabaseRuntime* radar = TextureDatabaseRuntime::Load("radar", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Register(radar);
-
-    //skins
-    TextureDatabaseRuntime* skins = TextureDatabaseRuntime::Load("skins", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Register(skins);
-
-    // cars
-    TextureDatabaseRuntime* cars = TextureDatabaseRuntime::Load("cars", false, TextureDatabaseFormat::DF_ETC);
-    TextureDatabaseRuntime::Register(cars);*/
-#endif
-
 
     const auto camera = RwCameraCreate();
     if (!camera) {
@@ -711,7 +688,7 @@ bool CGame::InitialiseRenderWare() {
     }
     RpWorldAddCamera(Scene.m_pRpWorld, Scene.m_pRwCamera);
     LightsCreate(Scene.m_pRpWorld);
-//	CreateDebugFont();
+
     CFont::Initialise();
     CHook::CallFunction<void>(g_libGTASA + (VER_x32 ? 0x0046FF38 + 1 : 0x55C1C8)); // CHud::Initialise();
     CHook::CallFunction<void>(g_libGTASA + (VER_x32 ? 0x005B1188 + 1 : 0x6D5970)); // CPlayerSkin::Initialise();
@@ -784,7 +761,7 @@ void CGame::Process() {
     uint32_t v2; // r5
     uint32_t v3; // r5
 
-    //FIXME
+    // FIXME
     ((void(*)())(g_libGTASA + (VER_x32 ? 0x003F8B50 + 1 : 0x4DB464)))(); // CPad::UpdatePads()
     ((void(*)())(g_libGTASA + (VER_x32 ? 0x002B03F8 + 1 : 0x36F374)))(); // CTouchInterface::Clear()
     ((void(*)())(g_libGTASA + (VER_x32 ? 0x0028C178 + 1 : 0x3467BC)))(); // CHID::Update()

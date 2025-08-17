@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 11.01.2023.
+// Created by resamp on 11.01.2023.
 //
 
 #include "TextureDatabaseRuntime.h"

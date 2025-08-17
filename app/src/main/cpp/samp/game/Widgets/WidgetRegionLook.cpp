@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 01.05.2023.
+// Created by resamp on 01.05.2023.
 //
 
 #include "WidgetRegionLook.h"

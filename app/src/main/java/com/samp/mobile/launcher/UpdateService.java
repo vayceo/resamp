@@ -92,7 +92,7 @@ public class UpdateService extends Service {
                 mGpuType = msg.getData().getInt("gputype");
                 if(mGpuType == 0)
                 {
-                    Log.e("x1y2z", "GPU not found");
+                    Log.e("resamp", "GPU not found");
                     return;
                 }
                 startUpdating();
@@ -125,7 +125,7 @@ public class UpdateService extends Service {
                 mGpuType = msg.getData().getInt("gputype");
                 if(mGpuType == 0)
                 {
-                    Log.e("x1y2z", "GPU not found");
+                    Log.e("resamp", "GPU not found");
                     return;
                 }
                 startUpdating();
@@ -174,7 +174,7 @@ public class UpdateService extends Service {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("x1y2z", "error " + error.toString());
+                Log.d("resamp", "error " + error.toString());
                 mGameStatus = UpdateActivity.GameStatus.Unknown;
                 Message obtain = Message.obtain(mInHandler, 5);
                 obtain.getData().putString("status", mGameStatus.name());
@@ -245,10 +245,10 @@ public class UpdateService extends Service {
 
         if(i5 == 2) return;
 
-        Log.d("x1y2z", "Info: " + Util.responseFiles);
+        Log.d("resamp", "Info: " + Util.responseFiles);
         JSONObject jsonObject = new JSONObject(Util.responseFiles);
         JSONArray jsonArray = jsonObject.getJSONArray("files");
-        Log.d("x1y2z", "Length: " + jsonArray.length());
+        Log.d("resamp", "Length: " + jsonArray.length());
         for(int i = 0; i<jsonArray.length(); i++) {
             FilesData fileData = new FilesData(jsonArray.getJSONObject(i).getString("name"), jsonArray.getJSONObject(i).getLong("size"), jsonArray.getJSONObject(i).getString("path"), jsonArray.getJSONObject(i).getString("url"));
             if (!fileData.getName().equals("samp_log.txt") && !fileData.getName().equals("svlog.txt") && !fileData.getName().equals("gtasatelem.set")) {
@@ -268,14 +268,14 @@ public class UpdateService extends Service {
                                 }
 
                                 mUpdateFiles.add(fileData.getPath());
-                                Log.d("x1y2z", "File name: " + fileData.getName());
+                                Log.d("resamp", "File name: " + fileData.getName());
                                 mUpdateFilesName.add(fileData.getName());
-                                Log.d("x1y2z", "File path: " + fileData.getPath());
+                                Log.d("resamp", "File path: " + fileData.getPath());
                                 mUpdateFilesSize.add(fileData.getSize());
                                 mUpdateGameDataSize=mUpdateGameDataSize+fileData.getSize();
-                                Log.d("x1y2z", "File size: " + fileData.getSize());
+                                Log.d("resamp", "File size: " + fileData.getSize());
                             }
-                            Log.d("x1y2z", "Data size: " + mUpdateGameDataSize);
+                            Log.d("resamp", "Data size: " + mUpdateGameDataSize);
                         }
                     }
                 }
@@ -365,7 +365,7 @@ public class UpdateService extends Service {
 
             String string = getExternalFilesDir(null) + "/" + arrayList.get(intRef.element);
 
-            //Log.d("x1y2z", "Update file path: " + string.replace((CharSequence) arrayList1.get(intRef.element), "") + ", Name:" + arrayList1.get(intRef.element));
+            //Log.d("resamp", "Update file path: " + string.replace((CharSequence) arrayList1.get(intRef.element), "") + ", Name:" + arrayList1.get(intRef.element));
 
             File file = new File(getExternalFilesDir(null), string);
             file.getParentFile().mkdirs();
@@ -376,7 +376,7 @@ public class UpdateService extends Service {
             Ref.LongRef longRef = new Ref.LongRef();
             longRef.element = System.currentTimeMillis();
 
-            Log.d("x1y2z", "startDataUpdating " + mUpdateGameDataSize + " " + mUpdateGameDataSizeUpdated);
+            Log.d("resamp", "startDataUpdating " + mUpdateGameDataSize + " " + mUpdateGameDataSizeUpdated);
 
             mDownloadingStatus = true;
             PRDownloader.download("https://samp-mobile.shop/files/" + arrayList.get(intRef.element), string.replace(arrayList1.get(intRef.element).toString(), ""), String.valueOf(arrayList1.get(intRef.element))).build().setOnStartOrResumeListener(null).setOnPauseListener(null).setOnCancelListener(null).setOnProgressListener(new OnProgressListener() {
@@ -408,14 +408,14 @@ public class UpdateService extends Service {
                 public void onDownloadComplete() {
                     mDownloadingStatus = false;
                     longRef1.element+=(long)arrayList2.get(intRef.element);
-                    Log.d("x1y2z", "completed");
+                    Log.d("resamp", "completed");
                 }
 
                 @Override
                 public void onError(Error error) {
                     mDownloadingStatus = false;
                     mUpdateFiles.add(String.valueOf(arrayList.get(intRef.element)));
-                    Log.d("x1y2z", "error downloadgamedata");
+                    Log.d("resamp", "error downloadgamedata");
                 }
             });
 
@@ -501,14 +501,14 @@ public class UpdateService extends Service {
                 }
                 setUpdateStatus(UpdateActivity.UpdateStatus.Undefined);
                 mDownloadingStatus = false;
-                Log.d("x1y2z", "completed");
+                Log.d("resamp", "completed");
             }
 
             @Override
             public void onError(Error error) {
                 mDownloadingStatus = false;
                 downloadGame();
-                Log.d("x1y2z", "error downloadgame");
+                Log.d("resamp", "error downloadgame");
             }
         });
 
@@ -530,7 +530,7 @@ public class UpdateService extends Service {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        Log.d("x1y2z", "isGameUpdateExists -> currentVersion " + packageInfo.versionCode + " | mUpdateVersion " + this.mUpdateVersion);
+        Log.d("resamp", "isGameUpdateExists -> currentVersion " + packageInfo.versionCode + " | mUpdateVersion " + this.mUpdateVersion);
         return packageInfo.versionCode == this.mUpdateVersion ? false:true;
     }
 

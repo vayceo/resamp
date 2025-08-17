@@ -22,10 +22,6 @@
 
 #include "crashlytics.h"
 
-/*
-Peerapol Unarak
-*/
-
 JavaVM* javaVM;
 
 char* g_pszStorage = nullptr;
@@ -39,7 +35,6 @@ CSnapShotHelper* pSnapShotHelper = nullptr;
 CAudioStream* pAudioStream = nullptr;
 CJavaWrapper* pJavaWrapper = nullptr;
 CSettings* pSettings = nullptr;
-//CVoice* pVoice = nullptr;
 
 MaterialTextGenerator* pMaterialTextGenerator = nullptr;
 
@@ -52,75 +47,24 @@ uintptr_t g_libSAMP = 0x00;
 
 void ApplyGlobalPatches();
 void ApplyPatches_level0();
-void ApplyMultiTouchPatches();
-void InstallGlobalHooks();
 void InstallSpecialHooks();
 void InitRenderWareFunctions();
 void FLog(const char* fmt, ...);
-//void MyLog(const char* fmt, ...);
 
 int work = 0;
 
 void ReadSettingFile()
 {
-	/*char path[255] = { 0 };
-	//sprintf(path, "%ssamp.set", g_pszStorage);
-	sprintf(path, "%sNickName.ini", g_pszStorage);
-
-	FILE* fp = fopen(path, "r");
-	if (fp == NULL) return;
-
-	char buf[1024];
-
-	// nickname
-	if (fgets(buf, 1024, fp) != NULL) {
-		buf[strcspn(buf, "\n\r")] = 0;
-		strcpy(g_nick, buf);
-	}
-
-	fclose(fp);*/
-
 	pSettings = new CSettings();
 
 	firebase::crashlytics::SetUserId(pSettings->Get().szNickName);
 }
 
-int hashing(const char* str) {
-	int hashing = 5381;
-	int c;
-	while (c = *str++) {
-		hashing = ((hashing << 5) + hashing) + c; /* hash * 33 + c */
-		if (hashing < 0) hashing = 100;
-	}
-	if (hashing < 0) hashing = 100;
-	return hashing;
-}
-
-void DoDebugLoop()
-{
-	// ...
-}
-
-void DoDebugStuff()
-{
-	// ...
-
-	RwMatrix mat = pGame->FindPlayerPed()->m_pPed->GetMatrix().ToRwMatrix();
-	
-	for (int i = 0; i < 100; i++)
-	{
-		CPlayerPed* ped = pGame->NewPlayer(i, mat.pos.x + i, mat.pos.y, mat.pos.z, 0.0f, false, false);
-		//ped->SetCollisionChecking(false);
-		//ped->SetGravityProcessing(false);
-	}
-}
 struct sigaction act_old;
 struct sigaction act1_old;
 struct sigaction act2_old;
 struct sigaction act3_old;
 
-extern int g_iLastProcessedSkinCollision, g_iLastProcessedEntityCollision, g_iLastRenderedObject;
-extern uintptr_t g_dwLastRetAddrCrash;
 void handler(int signum, siginfo_t *info, void* contextPtr)
 {
 	ucontext* context = (ucontext_t*)contextPtr;
@@ -223,28 +167,13 @@ void DoInitStuff()
 		pGame->SetMaxStats();
 		pGame->ToggleThePassingOfTime(false);
 
-		// voice
-		/*LogVoice("[dbg:samp:load] : module loading...");
-
-		for (const auto& loadCallback : Samp::loadCallbacks) {
-			if (loadCallback != nullptr) {
-				loadCallback();
-			}
-		}
-
-		Samp::loadStatus = true;*/
-
 		LogVoice("[dbg:samp:load] : module loaded");
 
 		if (bDebug)
 		{
-            CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + (VER_x32 ? 0x00951FA8 : 0xBBA8D0));
-            //TheCamera.Restore();
             CCamera::SetBehindPlayer();
 			pGame->DisplayHUD(true);
 			pGame->EnableClock(false);
-
-			DoDebugStuff();
 		}
 
 		bGameInited = true;
@@ -252,8 +181,6 @@ void DoInitStuff()
 
 	if (!bNetworkInited && !bDebug)
 	{
-		//ReadSettingFile();
-
 		pNetGame = new CNetGame("94.23.168.153", 1957, pSettings->Get().szNickName, pSettings->Get().szPassword);
 		bNetworkInited = true;
 
@@ -293,7 +220,6 @@ extern "C" {
 		
 		if(pNetGame) {
 			pNetGame->SendDialogResponse(i, i3, i2, (char*)szStr.c_str());
-			//pGame->FindPlayerPed()->TogglePlayerControllableWithoutLock(true);
 		}
 
 		pEnv->ReleaseByteArrayElements(str, pMsg, JNI_ABORT);
@@ -305,10 +231,6 @@ void MainLoop()
 	if (pGame->bIsGameExiting) return;
 
 	DoInitStuff();
-
-	if (bDebug) {
-		DoDebugLoop();
-	}
 
 	if (pNetGame) {
 		pNetGame->Process();
@@ -335,7 +257,6 @@ void InitGui()
 #include "game/multitouch.h"
 #include "armhook/patch.h"
 #include "util/CUtil.h"
-void SetUpGLHooks();
 jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
 	javaVM = vm;
@@ -377,17 +298,10 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	CHook::InitHookStuff();
 	InstallSpecialHooks();
 	ApplyPatches_level0();
-    //SetUpGLHooks();
     InitRenderWareFunctions();
     MultiTouch::initialize();
 
 	pGame = new CGame();
-
-	//pVoice = new CVoice();
-	//pVoice->Initialize(VOICE_FREQUENCY, CODEC_FREQUENCY, VOICE_SENDRRATE);
-
-	//pthread_t thread;
-	//pthread_create(&thread, 0, Init, 0);
 
 	struct sigaction act;
 	act.sa_sigaction = handler;
@@ -431,7 +345,6 @@ void FLog(const char* fmt, ...)
 	if (flLog == nullptr && pszStorage != nullptr)
 	{
 		sprintf(buffer, "%s/samp_log.txt", pszStorage);
-		//LOGI("buffer: %s", buffer);
 		flLog = fopen(buffer, "a");
 	}
 
@@ -449,90 +362,6 @@ void FLog(const char* fmt, ...)
 	fprintf(flLog, "%s\n", buffer);
 	fflush(flLog);
 
-	return;
-}
-
-void ChatLog(const char* fmt, ...)
-{
-	char buffer[0xFF];
-	static FILE* flLog = nullptr;
-	const char* pszStorage = g_pszStorage;
-
-
-	if (flLog == nullptr && pszStorage != nullptr)
-	{
-		sprintf(buffer, "%s/chat_log.txt", pszStorage);
-		flLog = fopen(buffer, "a");
-	}
-
-	memset(buffer, 0, sizeof(buffer));
-
-	va_list arg;
-	va_start(arg, fmt);
-	vsnprintf(buffer, sizeof(buffer), fmt, arg);
-	va_end(arg);
-
-	if (flLog == nullptr) return;
-	fprintf(flLog, "%s\n", buffer);
-	fflush(flLog);
-
-	return;
-}
-
-void MyLog(const char* fmt, ...)
-{
-	char buffer[0xFF];
-	static FILE* flLog = nullptr;
-	const char* pszStorage = g_pszStorage;
-
-
-	if (flLog == nullptr && pszStorage != nullptr)
-	{
-		sprintf(buffer, "%s/samp_log.txt", pszStorage);
-		//LOGI("buffer: %s", buffer);
-		flLog = fopen(buffer, "a");
-	}
-
-	memset(buffer, 0, sizeof(buffer));
-
-	va_list arg;
-	va_start(arg, fmt);
-	vsnprintf(buffer, sizeof(buffer), fmt, arg);
-	va_end(arg);
-
-	if (flLog == nullptr) return;
-	fprintf(flLog, "%s\n", buffer);
-	fflush(flLog);
-
-	return;
-}
-
-void MyLog2(const char* fmt, ...)
-{
-	char buffer[0xFF];
-	static FILE* flLog = nullptr;
-	const char* pszStorage = g_pszStorage;
-
-
-	if (flLog == nullptr && pszStorage != nullptr)
-	{
-		sprintf(buffer, "%s/samp_log.txt", pszStorage);
-		//LOGI("buffer: %s", buffer);
-		flLog = fopen(buffer, "a");
-	}
-
-	memset(buffer, 0, sizeof(buffer));
-
-	va_list arg;
-	va_start(arg, fmt);
-	vsnprintf(buffer, sizeof(buffer), fmt, arg);
-	va_end(arg);
-
-	if (pUI) pUI->chat()->addDebugMessage(buffer);
-
-	if (flLog == nullptr) return;
-	fprintf(flLog, "%s\n", buffer);
-	fflush(flLog);
 	return;
 }
 

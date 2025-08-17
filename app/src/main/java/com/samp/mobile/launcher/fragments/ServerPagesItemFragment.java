@@ -86,8 +86,7 @@ public class ServerPagesItemFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Log.d("gor", "clicked add server button");
-                    builder.setMessage("Write me to add here your server (25$ per month)!\nTelegram: @gorgrigoryan18\n" +
-                                    "Discord: x1y2z")
+                    builder.setMessage("no :3")
                             .setCancelable(false)
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {

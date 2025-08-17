@@ -1,5 +1,5 @@
 //
-// Created by x1y2z on 22.06.2023.
+// Created by resamp on 22.06.2023.
 //
 
 #include "../common.h"

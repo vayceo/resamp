@@ -15,7 +15,6 @@ import com.wardrumstudios.utils.WarMedia;
 
 @Obfuscate
 public class GTASA extends WarMedia {
-    // public static GTASA gtasaSelf = null;
     static String vmVersion;
     private boolean once = false;
 
@@ -34,7 +33,6 @@ public class GTASA extends WarMedia {
         catch (ExceptionInInitializerError | UnsatisfiedLinkError ignored) {
         }
         System.loadLibrary("GTASA");
-        System.loadLibrary("bass");
         System.loadLibrary("samp");
     }
 
@@ -88,15 +86,7 @@ public class GTASA extends WarMedia {
             once = true;
         }
 
-        //if(!SignatureChecker.isSignatureValid(this, getPackageName()))
-        //{
-        //Toast.makeText(this, "Use original launcher! No remake", Toast.LENGTH_LONG).show();
-        //return;
-        //}
-
         System.out.println("GTASA onCreate");
-        //  gtasaSelf = this;
-        //  wantsAccelerometer = true;
 
         super.onCreate(bundle);
 

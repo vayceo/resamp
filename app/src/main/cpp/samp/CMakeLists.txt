@@ -9,7 +9,7 @@ elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
     add_definitions(-DVER_x32=false)
 endif()
 
-# Add source files
+# add source files
 file(GLOB_RECURSE SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/*.c*
         ${CMAKE_CURRENT_LIST_DIR}/**/*.c*
@@ -23,7 +23,7 @@ file(GLOB_RECURSE SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/**/**/**/**/**/**/**/**/**/*.c*
         )
 
-# Add include directories
+# add include directories
 include_directories(
         ${CMAKE_CURRENT_LIST_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/util/
@@ -34,14 +34,12 @@ include_directories(
         ${CMAKE_CURRENT_LIST_DIR}/game/Core/
 )
 
-# Opus
+# opus
 #add_library(libopus STATIC IMPORTED)
 #set_target_properties(libopus PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/vendor/opus/libopus.a)
 
 add_library(samp SHARED ${SOURCES})
 target_link_libraries(samp log EGL GLESv3 opus shadowhook::shadowhook ${CMAKE_CURRENT_SOURCE_DIR}/vendor/bass/libs/${ANDROID_ABI}/libbass.so)
 
-# Set compilation flags
-#
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fvisibility=hidden -pthread -Wall -O1 -fexceptions")
-
+# compilation flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fvisibility=hidden -pthread -Wall -O3 -fexceptions") # debug flags
