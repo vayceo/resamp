@@ -95,15 +95,13 @@ bool UI::initialize()
 	// mem
 	Label* d_label1;
 
-	d_label1 = new Label(cryptor::create("SA:MP Mobile 2.10 x64").decrypt(), ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 3);
+#if VER_x32
+	d_label1 = new Label(cryptor::create("client-x32").decrypt(), ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 3);
+#else
+    d_label1 = new Label(cryptor::create("client-x64").decrypt(), ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 3);
+#endif
 	this->addChild(d_label1);
 	d_label1->setPosition(ImVec2(3.0, 3.0));
-
-
-    // ==== version ==== //
-    //d_label = new Label("", ImColor(1.0f, 1.0f, 1.0f), true, UISettings::fontSize() / 2);
-    //this->addChild(d_label);
-   // d_label->setPosition(ImVec2(3.0, 55.0));
 
 	return true;
 }
@@ -240,7 +238,7 @@ void UI::renderDebug()
         label->setText(&szStr[0]);
         label->setPosition(pos);
 
-        /*auto &msUsed = CStreaming::ms_memoryUsed;
+        auto &msUsed = CStreaming::ms_memoryUsed;
         auto &msAvailable = CStreaming::ms_memoryAvailable;
 
         struct mallinfo memInfo = mallinfo();
@@ -281,7 +279,7 @@ void UI::renderDebug()
         pos = ImVec2(pUI->ScaleX(40.0f), pUI->ScaleY(1080.0f - UISettings::fontSize() * 1));
 
         label4->setText(&debugPools[0]);
-        label4->setPosition(pos);*/
+        label4->setPosition(pos);
 }
 
 void UI::PushToBufferedQueueTextDrawPressed(uint16_t textdrawId)
