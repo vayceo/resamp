@@ -37,6 +37,7 @@ extern MaterialTextGenerator* pMaterialTextGenerator;
 uint8_t byteInternalPlayer = 0;
 CPedGTA* dwCurPlayerActor = 0;
 uint8_t byteCurPlayer = 0;
+uint8_t byteCurDriver = 0;
 
 extern "C" uintptr_t get_lib()
 {
