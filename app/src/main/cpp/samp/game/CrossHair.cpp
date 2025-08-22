@@ -21,10 +21,10 @@ extern CNetGame *pNetGame;
 
 void CCrossHair::Init()
 {
-    FLog("CCrossHair::Init");
+    Log("CCrossHair::Init");
     pCircleTex = new CSprite2d();
     pCircleTex->m_pTexture = CUtil::LoadTextureFromDB("txd", "siteM16");
-    FLog("CCrossHair::Init 2");
+    Log("CCrossHair::Init 2");
 }
 
 void CCrossHair::Render()

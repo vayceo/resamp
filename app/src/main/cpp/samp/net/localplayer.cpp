@@ -40,7 +40,7 @@ bool IsLongTimeDead()
 
 CLocalPlayer::CLocalPlayer()
 {
-    FLog("CLocalPlayer::CLocalPlayer()");
+    Log("CLocalPlayer::CLocalPlayer()");
     ResetAllSyncAttributes();
 
     m_bInRCMode = false;
@@ -680,7 +680,7 @@ void CLocalPlayer::SendWastedNotification()
     byteDeathReason = m_pPlayerPed->FindDeathReasonAndResponsiblePlayer(&WhoWasResponsible);
     bsPlayerDeath.Write(byteDeathReason);
     bsPlayerDeath.Write(WhoWasResponsible);
-    FLog("SendWastedNotification %d %d", byteDeathReason, WhoWasResponsible);
+    Log("SendWastedNotification %d %d", byteDeathReason, WhoWasResponsible);
     pNetGame->GetRakClient()->RPC(&RPC_Death, &bsPlayerDeath, HIGH_PRIORITY, RELIABLE_ORDERED, 0, false, UNASSIGNED_NETWORK_ID, nullptr);
 }
 // 0.3.7 (ํๅ๒ extKeys ่ this->field_104 = 1)
@@ -1841,7 +1841,7 @@ void CLocalPlayer::SendBulletSyncData(PLAYERID byteHitID, uint8_t byteHitType, C
     blSync.offsets[1] = 0.0f;
     blSync.offsets[2] = 0.0f;
 
-    FLog("SendBulletSync: %d, %d, %d, %f, %f, %f, %f, %f, %f", blSync.hitId, blSync.hitType, blSync.weapId,
+    Log("SendBulletSync: %d, %d, %d, %f, %f, %f, %f, %f, %f", blSync.hitId, blSync.hitType, blSync.weapId,
          blSync.hitPos[0], blSync.hitPos[1], blSync.hitPos[2], blSync.offsets[0], blSync.offsets[1], blSync.offsets[2]);
 
     RakNet::BitStream bsBulletSync;

@@ -56,12 +56,12 @@ void CSnapShotHelper::SetUpScene()
 RwTexture* CSnapShotHelper::CreateObjectSnapShot(int iModel, uint32_t dwColor, CVector* vecRot, float fZoom)
 {
     if(iModel > 20000) return nullptr;
-    FLog("CreateObjectSnapShot: %d, %f, %f, %f", iModel, vecRot->x, vecRot->y, vecRot->z);
+    Log("CreateObjectSnapShot: %d, %f, %f, %f", iModel, vecRot->x, vecRot->y, vecRot->z);
     CStreaming::TryLoadModel(iModel);
 
     auto pRwObject = ModelInfoCreateInstance(iModel);
     if (pRwObject == nullptr) {
-        FLog("pRwObject no rw object");
+        Log("pRwObject no rw object");
         return nullptr;
     }
 
@@ -127,7 +127,7 @@ RwTexture* CSnapShotHelper::CreateObjectSnapShot(int iModel, uint32_t dwColor, C
 // 0.3.7
 RwTexture* CSnapShotHelper::CreatePedSnapShot(int iModel, uint32_t dwColor, CVector* vecRot, float fZoom)
 {
-	FLog("Ped snapshot: %d", iModel);
+	Log("Ped snapshot: %d", iModel);
 
 	RwRaster* raster = RwRasterCreate(256, 256, 32, rwRASTERFORMAT8888 | rwRASTERTYPECAMERATEXTURE);
 	// RwTextureCreate
@@ -214,7 +214,7 @@ RwTexture* CSnapShotHelper::CreateVehicleSnapShot(int iModel, uint32_t dwColor, 
 	CVehicle* pVehicle = new CVehicle(iModel, 0.0f, 0.0f, 50.0f, 0.0f, false, false);
 
 	if (!raster || !bufferTexture || !pVehicle || !pVehicle->m_pVehicle) {
-        FLog("somethign went wrong in snapshot");
+        Log("somethign went wrong in snapshot");
         return 0;
     }
 

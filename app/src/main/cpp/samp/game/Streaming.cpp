@@ -22,13 +22,13 @@
 extern UI *pUI;
 
 bool CStreaming::TryLoadModel(int modelId) {
-    FLog("TryLoadModel %d", modelId);
+    Log("TryLoadModel %d", modelId);
     if(!CStreaming::GetInfo(modelId).IsLoaded()) {
-        FLog("TryLoadModel 1");
+        Log("TryLoadModel 1");
         CStreaming::RequestModel(modelId, STREAMING_GAME_REQUIRED | STREAMING_KEEP_IN_MEMORY);
-        FLog("TryLoadModel 11");
+        Log("TryLoadModel 11");
         CStreaming::LoadAllRequestedModels(false);
-        FLog("TryLoadModel 2");
+        Log("TryLoadModel 2");
         uint32 count = 0;
         while (!CStreaming::GetInfo(modelId).IsLoaded()) {
             count++;
@@ -39,9 +39,9 @@ bool CStreaming::TryLoadModel(int modelId) {
                 return false;
             }
         }
-        FLog("TryLoadModel 3");
+        Log("TryLoadModel 3");
     }
-    FLog("TryLoadModel 4");
+    Log("TryLoadModel 4");
     return true;
 }
 

@@ -12,11 +12,11 @@ extern CNetGame* pNetGame;
 
 CPlayerTags::CPlayerTags()
 {
-	FLog("Loading AFK icon..");
+	Log("Loading AFK icon..");
 	m_pAFKIconTexture = CUtil::LoadTextureFromDB("samp", "afk_icon");
-    FLog("Loading AFK icon1..");
+    Log("Loading AFK icon1..");
 	m_pMicroIconTexture = CUtil::LoadTextureFromDB("samp", "afk_icon");
-    FLog("Loading AFK icon2..");
+    Log("Loading AFK icon2..");
 }
 
 CPlayerTags::~CPlayerTags() {}

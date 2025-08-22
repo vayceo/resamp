@@ -506,7 +506,7 @@ uint32_t CWeapon__ProcessLineOfSight_hook(CVector *vecOrigin, CVector *vecEnd, C
     uintptr_t dwRetAddr = 0;
     GET_LR(dwRetAddr);
 
-    FLog("dwRetAddr CWeapon__ProcessLineOfSight_hook 0x%llx", dwRetAddr);
+    Log("dwRetAddr CWeapon__ProcessLineOfSight_hook 0x%llx", dwRetAddr);
 #if VER_x32
     if(dwRetAddr >= 0x005DC178 && dwRetAddr <= 0x005DD684)
 		g_bForceWorldProcessLineOfSight = true;
@@ -547,9 +547,9 @@ uint32_t CWorld__ProcessLineOfSight_hook(CVector* vecOrigin, CVector* vecEnd, CC
                         }
                         else
                         {
-                            //FLog("vecPosPlusOffset %f %f %f", vecPosPlusOffset.x, vecPosPlusOffset.y, vecPosPlusOffset.z);
-                            //FLog("pEntity->GetMatrix().m_up %f %f %f", g_pCurrentBulletData->pEntity->GetMatrix().m_up.x, g_pCurrentBulletData->pEntity->GetMatrix().m_up.y, g_pCurrentBulletData->pEntity->GetMatrix().m_up.z);
-                            //FLog("g_pCurrentBulletData->vecOffset %f %f %f", g_pCurrentBulletData->vecOffset.x, g_pCurrentBulletData->vecOffset.y, g_pCurrentBulletData->vecOffset.z);
+                            //Log("vecPosPlusOffset %f %f %f", vecPosPlusOffset.x, vecPosPlusOffset.y, vecPosPlusOffset.z);
+                            //Log("pEntity->GetMatrix().m_up %f %f %f", g_pCurrentBulletData->pEntity->GetMatrix().m_up.x, g_pCurrentBulletData->pEntity->GetMatrix().m_up.y, g_pCurrentBulletData->pEntity->GetMatrix().m_up.z);
+                            //Log("g_pCurrentBulletData->vecOffset %f %f %f", g_pCurrentBulletData->vecOffset.x, g_pCurrentBulletData->vecOffset.y, g_pCurrentBulletData->vecOffset.z);
                             ProjectMatrix((CVector*)&vecPosPlusOffset, &g_pCurrentBulletData->pEntity->GetMatrix(), &g_pCurrentBulletData->vecOffset);
                             //vecPosPlusOffset.x = pEntity->GetMatrix().m_up.x * g_pCurrentBulletData->vecOffset.z + pEntity->GetMatrix().m_forward.x * g_pCurrentBulletData->vecOffset.y + pEntity->GetMatrix().m_right.x * g_pCurrentBulletData->vecOffset.x + pEntity->GetMatrix().m_pos.x;
                             //vecPosPlusOffset.y = pEntity->GetMatrix().m_up.y * g_pCurrentBulletData->vecOffset.z + pEntity->GetMatrix().m_forward.y * g_pCurrentBulletData->vecOffset.y + pEntity->GetMatrix().m_right.y * g_pCurrentBulletData->vecOffset.x + pEntity->GetMatrix().m_pos.y;
@@ -1121,7 +1121,7 @@ void ApplyFPSPatch(uint8_t fps);
 void (*NvUtilInit)();
 void NvUtilInit_hook()
 {
-    FLog("NvUtilInit");
+    Log("NvUtilInit");
 
     NvUtilInit();
 
@@ -1153,67 +1153,67 @@ stFile* NvFOpen(const char* r0, const char* r1, int r2, int r3)
     if(!strncmp(r1+12, "mainV1.scm", 10))
     {
         sprintf(path, "%sSAMP/main.scm", g_pszStorage);
-        FLog("Loading %s", path);
+        Log("Loading %s", path);
     }
     // ----------------------------
     if(!strncmp(r1+12, "SCRIPTV1.IMG", 12))
     {
         sprintf(path, "%sSAMP/script.img", g_pszStorage);
-        FLog("Loading script.img..");
+        Log("Loading script.img..");
     }
     // ----------------------------
     if(!strncmp(r1, "DATA/PEDS.IDE", 13))
     {
         sprintf(path, "%sSAMP/peds.ide", g_pszStorage);
-        FLog("Loading peds.ide..");
+        Log("Loading peds.ide..");
     }
     // ----------------------------
     if(!strncmp(r1, "DATA/VEHICLES.IDE", 17))
     {
         sprintf(path, "%sSAMP/vehicles.ide", g_pszStorage);
-        FLog("Loading vehicles.ide..");
+        Log("Loading vehicles.ide..");
     }
 
     if (!strncmp(r1, "DATA/GTA.DAT", 12))
     {
         sprintf(path, "%sSAMP/gta.dat", g_pszStorage);
-        FLog("Loading gta.dat..");
+        Log("Loading gta.dat..");
     }
 
     if (!strncmp(r1, "DATA/HANDLING.CFG", 17))
     {
         sprintf(path, "%sSAMP/handling.cfg", g_pszStorage);
-        FLog("Loading handling.cfg..");
+        Log("Loading handling.cfg..");
     }
 
     if (!strncmp(r1, "DATA/WEAPON.DAT", 15))
     {
         sprintf(path, "%sSAMP/weapon.dat", g_pszStorage);
-        FLog("Loading weapon.dat..");
+        Log("Loading weapon.dat..");
     }
 
     if (!strncmp(r1, "DATA/FONTS.DAT", 15))
     {
         sprintf(path, "%sdata/fonts.dat", g_pszStorage);
-        FLog("Loading weapon.dat..");
+        Log("Loading weapon.dat..");
     }
 
     if (!strncmp(r1, "DATA/PEDSTATS.DAT", 15))
     {
         sprintf(path, "%sdata/pedstats.dat", g_pszStorage);
-        FLog("Loading weapon.dat..");
+        Log("Loading weapon.dat..");
     }
 
     if (!strncmp(r1, "DATA/TIMECYC.DAT", 15))
     {
         sprintf(path, "%sdata/timecyc.dat", g_pszStorage);
-        FLog("Loading weapon.dat..");
+        Log("Loading weapon.dat..");
     }
 
     if (!strncmp(r1, "DATA/POPCYCLE.DAT", 15))
     {
         sprintf(path, "%sdata/popcycle.dat", g_pszStorage);
-        FLog("Loading weapon.dat..");
+        Log("Loading weapon.dat..");
     }
 
 #if VER_x32
@@ -1233,7 +1233,7 @@ stFile* NvFOpen(const char* r0, const char* r1, int r2, int r3)
     }
     else
     {
-        FLog("NVFOpen hook | Error: file not found (%s)", path);
+        Log("NVFOpen hook | Error: file not found (%s)", path);
         free(st);
         return nullptr;
     }
@@ -1438,7 +1438,7 @@ int mpg123_param_hook(void* mh, int key, long val, int ZERO, double fval)
 #include "Widgets/TouchInterface.h"
 void InjectHooks()
 {
-    FLog("InjectHooks");
+    Log("InjectHooks");
     CHook::Write(g_libGTASA + (VER_x32 ? 0x678954 : 0x84F2D0), &Scene);
 
 #if !VER_x32 // mb all.. wtf crash x64?

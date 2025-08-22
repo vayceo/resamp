@@ -159,7 +159,7 @@ void CPedGTA::GiveWeapon(int iWeaponID, int iAmmo)
 {
     int iModelID = 0;
     iModelID = GameGetWeaponModelIDFromWeaponID(iWeaponID);
-    FLog("GiveWeapon, iModelID %d, iWeaponID %d", iModelID, iWeaponID);
+    Log("GiveWeapon, iModelID %d, iWeaponID %d", iModelID, iWeaponID);
 
     if (iModelID == -1 || iModelID == 350 || iModelID == 365) return;
 

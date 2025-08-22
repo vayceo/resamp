@@ -106,7 +106,7 @@ void ScrTogglePlayerSpectating(RPCParameters *rpcParams)
 	RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
 	bsData.Read(dwToggle);
 
-	FLog("TogglePlayerSpectating: %d", dwToggle);
+	Log("TogglePlayerSpectating: %d", dwToggle);
 
 	pNetGame->GetPlayerPool()->GetLocalPlayer()->ToggleSpectating(dwToggle);
 
@@ -596,7 +596,7 @@ void ScrApplyPlayerAnimation(RPCParameters* rpcParams)
 		}
 
 		if (pPlayerPed) {
-			FLog("ApplyAnimation: %s:%s", szAnimLib, szAnimName);
+			Log("ApplyAnimation: %s:%s", szAnimLib, szAnimName);
 			pPlayerPed->ApplyAnimation(szAnimName, szAnimLib, fDelta, bLoop, bLockX, bLockY, bFreeze, dwTime);
 		}
 	}
@@ -608,7 +608,7 @@ void ScrClearPlayerAnimations(RPCParameters* rpcParams)
 	int iBitLength = rpcParams->numberOfBitsOfData;
 	RakNet::BitStream bsData((unsigned char*)Data, (iBitLength / 8) + 1, false);
 
-	FLog("ClearAnimation");
+	Log("ClearAnimation");
 
 	PLAYERID playerId;
 	bsData.Read(playerId);
@@ -680,11 +680,11 @@ void ScrShowTextDraw(RPCParameters* rpcParams)
 	unsigned char* Data = reinterpret_cast<unsigned char*>(rpcParams->input);
 	int iBitLength = rpcParams->numberOfBitsOfData;
 
-    FLog("ScrShowTextDraw");
+    Log("ScrShowTextDraw");
 
 	CTextDrawPool* pTextDrawPool = pNetGame->GetTextDrawPool();
 	if (pTextDrawPool == nullptr) {
-        FLog("no textdraw pool");
+        Log("no textdraw pool");
         return;
     }
 
@@ -1690,7 +1690,7 @@ int GetInternalBoneIDFromSampID(int sampid)
 
 void ScrSetPlayerAttachedObject(RPCParameters* rpcParams)
 {
-    FLog("ScrSetPlayerAttachedObject");
+    Log("ScrSetPlayerAttachedObject");
     unsigned char* Data = reinterpret_cast<unsigned char*>(rpcParams->input);
     int iBitLength = rpcParams->numberOfBitsOfData;
     RakNet::BitStream bsData(Data, (iBitLength / 8) + 1, false);
@@ -1955,7 +1955,7 @@ void AttachCameraToObject(RPCParameters *rpcParams)
 
 void RegisterScriptRPCs(RakClientInterface *pRakClient)
 {
-	FLog("Registering script RPC's..");
+	Log("Registering script RPC's..");
 
 	// RPC_ScrDisableVehicleCollision
 	pRakClient->RegisterAsRemoteProcedureCall(&RPC_ScrSetMapIcon, ScrSetPlayerMapIcon);

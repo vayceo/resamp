@@ -520,12 +520,12 @@ bool CRemotePlayer::Spawn(uint8_t byteTeam, int iSkin, CVector *vecPos, float fR
 	CPlayerPed* pPlayerPed = pGame->NewPlayer(iSkin, vecPos->x, vecPos->y, vecPos->z, fRotation, true, m_bIsNPC);
 	if (pPlayerPed)
 	{
-        FLog("CRemotePlayer::Spawn 1");
+        Log("CRemotePlayer::Spawn 1");
 		if (dwColor) {
 			SetRadarColor(m_PlayerID, dwColor);
 		}
 
-        FLog("CRemotePlayer::Spawn 2");
+        Log("CRemotePlayer::Spawn 2");
 		if (m_dwMarker) {
 			pGame->DisableMarker(m_dwMarker);
 			m_dwMarker = 0;
@@ -544,15 +544,15 @@ bool CRemotePlayer::Spawn(uint8_t byteTeam, int iSkin, CVector *vecPos, float fR
 			pPlayerPed->SetFightingStyle(byteFightingStyle);
 		}
 
-        FLog("CRemotePlayer::Spawn 3");
+        Log("CRemotePlayer::Spawn 3");
 
 		SetState(PLAYER_STATE_SPAWNED);
-        FLog("CRemotePlayer::Spawn 4");
+        Log("CRemotePlayer::Spawn 4");
 		return true;
 	}
 	else
 	{
-        FLog("CRemotePlayer::Spawn no spawn");
+        Log("CRemotePlayer::Spawn no spawn");
 		SetState(PLAYER_STATE_NONE);
 		return false;
 	}
@@ -960,7 +960,7 @@ void CRemotePlayer::UpdateVehicleRotation()
 // 0.3.7
 void CRemotePlayer::PutInCurrentVehicle()
 {
-	FLog("PutInCurrentVehicle");
+	Log("PutInCurrentVehicle");
 
 	CVehiclePool* pVehiclePool = pNetGame->GetVehiclePool();
 

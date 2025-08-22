@@ -147,12 +147,12 @@ void CColModel::RemoveTrianglePlanes() {
 }
 
 void* CColModel::operator new(size_t size) {
-    FLog("Err no func CColModel::operator new(unsigned size)");
+    Log("Err no func CColModel::operator new(unsigned size)");
    // return GetColModelPool()->New();
 }
 
 void CColModel::operator delete(void* data) {
-    FLog("Err no func CColModel::operator delete(void* data)");
+    Log("Err no func CColModel::operator delete(void* data)");
    // GetColModelPool()->Delete(static_cast<CColModel*>(data));
 }
 

@@ -83,7 +83,7 @@ void CAudioStream::Process()
 
 bool CAudioStream::Play(const char* szUrl, float fX, float fY, float fZ, float fRadius, bool bUsePos)
 {
-	FLog("Play: %s", szUrl);
+	Log("Play: %s", szUrl);
 
 	if (!m_bInited) return false;
 	Stop(true);
@@ -112,7 +112,7 @@ bool CAudioStream::Play(const char* szUrl, float fX, float fY, float fZ, float f
 // 0.3.7
 bool CAudioStream::Stop(bool bWaitThread)
 {
-	FLog("Stop: %s", g_szAudioStreamUrl);
+	Log("Stop: %s", g_szAudioStreamUrl);
 	if (!m_bInited || !g_bAudioStreamThreadWorked)
 		return false;
 

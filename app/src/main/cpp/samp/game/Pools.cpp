@@ -25,7 +25,7 @@ PoolAllocator::Pool*      CPools::ms_pPedAttractorPool;
 
 void CPools::Initialise()
 {
-    FLog("CPools::Initialise");
+    Log("CPools::Initialise");
 
     CPools::ms_pPtrNodeSingleLinkPool   = new CPool<CPtrNodeSingleLink>(100000, "PtrNode Single");
     CPools::ms_pPtrNodeDoubleLinkPool   = new CPool<CPtrNodeDoubleLink>(60000, "PtrNode Double");

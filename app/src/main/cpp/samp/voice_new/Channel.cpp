@@ -9,9 +9,9 @@ Channel::Channel(const uint32_t channelFlags)
     {
     //  BASS_ChannelSetAttribute(handle, BASS_ATTRIB_VOL, 1.0f);
 
-    if(this->handle == NULL) FLog("[sv:err:channel] : "
+    if(this->handle == NULL) Log("[sv:err:channel] : "
                                  "failed to create bass channel (code:%d)", BASS_ErrorGetCode());
-    if(this->decoder == nullptr) FLog("[sv:err:channel] : "
+    if(this->decoder == nullptr) Log("[sv:err:channel] : "
                                      "failed to create opus decoder (code:%d)", this->opusErrorCode);
 
     if(this->handle == NULL || this->decoder == nullptr)
@@ -77,7 +77,7 @@ void Channel::Push(const uint32_t packetNumber, const uint8_t* const dataPtr, co
 {
     if(!this->initialized || packetNumber == NULL)
     {
-        FLog("[sv:dbg:channel:push] : init channel (speaker:%hu)", this->speaker);
+        Log("[sv:dbg:channel:push] : init channel (speaker:%hu)", this->speaker);
 
         BASS_ChannelPause(this->handle);
         BASS_ChannelSetPosition(this->handle, 0, BASS_POS_BYTE);
@@ -92,14 +92,14 @@ void Channel::Push(const uint32_t packetNumber, const uint8_t* const dataPtr, co
     }
     else if(packetNumber < this->expectedPacketNumber)
     {
-        FLog("[sv:dbg:channel:push] : late packet to channel (speaker:%hu) "
+        Log("[sv:dbg:channel:push] : late packet to channel (speaker:%hu) "
             "(pack:%u;expPack:%u)", this->speaker, packetNumber, this->expectedPacketNumber);
 
         return;
     }
     else if(packetNumber > this->expectedPacketNumber)
     {
-        FLog("[sv:dbg:channel:push] : lost packet to channel (speaker:%hu) "
+        Log("[sv:dbg:channel:push] : lost packet to channel (speaker:%hu) "
             "(pack:%u;expPack:%u)", this->speaker, packetNumber, this->expectedPacketNumber);
 
         if(const int length = opus_decode(this->decoder, dataPtr, dataSize, this->decBuffer.data(),
@@ -125,7 +125,7 @@ void Channel::Push(const uint32_t packetNumber, const uint8_t* const dataPtr, co
            // return;
 
 
-        FLog("[sv:dbg:channel:push] : playing channel (speaker:%hu)", this->speaker);
+        Log("[sv:dbg:channel:push] : playing channel (speaker:%hu)", this->speaker);
 
         BASS_ChannelPlay(this->handle, 0);
 

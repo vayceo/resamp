@@ -599,7 +599,7 @@ void Plugin::DisconnectHandler()
 
 void Plugin::OnDeviceInit()
 {
-    FLog("Plugin::OnDeviceInit()");
+    Log("Plugin::OnDeviceInit()");
     SpeakerList::Init();
 	MicroIcon::Init();
 }

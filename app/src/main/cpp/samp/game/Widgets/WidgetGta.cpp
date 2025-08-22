@@ -122,7 +122,7 @@ bool CWidget__IsTouched_hook(uintptr_t *thiz, CVector2D *pVecOut) {
 uintptr_t (*CWidget)(CWidgetButton* thiz, const char* name, uintptr_t* a3, int a4, uintptr_t* a5);
 uintptr_t CWidget_hook(CWidgetButton* thiz, const char* name, uintptr_t*  a3, int a4, uintptr_t* a5)
 {
-    FLog("New Widget: \"%s\" 0x%X", name, thiz-g_libGTASA);
+    Log("New Widget: \"%s\" 0x%X", name, thiz-g_libGTASA);
 
     SetWidgetFromName(name, thiz);
     return CWidget(thiz, name, a3, a4, a5);

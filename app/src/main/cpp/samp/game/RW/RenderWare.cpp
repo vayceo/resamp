@@ -61,7 +61,7 @@ RwBool (*RwTextureDestroy)(RwTexture* texture);
 void WriteMemory(uintptr_t dest, uintptr_t src, size_t size);
 void InitRenderWareFunctions()
 {
-	FLog("Initializing RenderWare..");
+	Log("Initializing RenderWare..");
 
 	/* skeleton.h */
 	RsGlobal = (RsGlobalType*)(g_libGTASA + (VER_x32 ? 0x009FC8FC : 0xC9B320));

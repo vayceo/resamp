@@ -11,7 +11,7 @@ bool Network::Init() noexcept
     if(Network::initStatus)
         return false;
 
-    FLog("[sv:dbg:network:init] : module initializing...");
+    Log("[sv:dbg:network:init] : module initializing...");
 
     Network::socketHandle = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -34,7 +34,7 @@ bool Network::Init() noexcept
 
     Network::connectionStatus = ConnectionStatus::Disconnected;
 
-    FLog("[sv:dbg:network:init] : module initialized");
+    Log("[sv:dbg:network:init] : module initialized");
 
     Network::initStatus = true;
 
@@ -46,7 +46,7 @@ void Network::Free() noexcept
     if(!Network::initStatus)
         return;
 
-    FLog("[sv:dbg:network:free] : module releasing...");
+    Log("[sv:dbg:network:free] : module releasing...");
 
     Network::connectionStatus = ConnectionStatus::Disconnected;
 
@@ -73,7 +73,7 @@ void Network::Free() noexcept
     while(!Network::voiceQueue.empty())
         Network::voiceQueue.pop();
 
-    FLog("[sv:dbg:network:free] : module released");
+    Log("[sv:dbg:network:free] : module released");
 
     Network::initStatus = false;
 }
@@ -253,7 +253,7 @@ void Network::OnRaknetConnect(const char *ip, const uint32_t port) noexcept
     if(!Network::initStatus)
         return;
 
-    FLog("[dbg:raknet:client:connect] : connecting to game server '*.*.*.*:****'...", ip, port);
+    Log("[dbg:raknet:client:connect] : connecting to game server '*.*.*.*:****'...", ip, port);
 
     Network::serverIp = ip;
 
@@ -268,7 +268,7 @@ void Network::OnRaknetConnect(const char *ip, const uint32_t port) noexcept
 
     Network::connectionStatus = ConnectionStatus::RNConnecting;
 
-    FLog("[dbg:raknet:client:connect] : connected");
+    Log("[dbg:raknet:client:connect] : connected");
 }
 
 bool Network::OnRaknetRpc(const int id, RakNet::BitStream& parameters) noexcept
@@ -289,7 +289,7 @@ bool Network::OnRaknetRpc(const int id, RakNet::BitStream& parameters) noexcept
 
     parameters.Write(reinterpret_cast<const char*>(&stData), sizeof(stData));
 
-    FLog("[sv:dbg:network:connect] : raknet connecting... "
+    Log("[sv:dbg:network:connect] : raknet connecting... "
         "(version:%hhu;micro:%hhu)", stData.version, stData.micro);
 
     return true;
@@ -318,7 +318,7 @@ bool Network::OnRaknetReceive(Packet* packet) noexcept
             const auto& stData = *reinterpret_cast<SV::ServerInfoPacket*>(controlPacketPtr->data);
             if(controlPacketPtr->length != sizeof(stData)) return false;
 
-            FLog("[sv:dbg:network:serverInfo] : connecting to voiceserver "
+            Log("[sv:dbg:network:serverInfo] : connecting to voiceserver "
                 "'*.*.*.*:%hu'...", Network::serverIp.c_str(), stData.serverPort);
 
             sockaddr_in serverAddress {};
@@ -330,7 +330,7 @@ bool Network::OnRaknetReceive(Packet* packet) noexcept
             if (connect(Network::socketHandle, reinterpret_cast<const sockaddr*>(&serverAddress),
                         sizeof(serverAddress)) == SOCKET_ERROR)
             {
-                FLog("[sv:err:network:serverInfo] : connect error.");
+                Log("[sv:err:network:serverInfo] : connect error.");
                 return false;
             }
 
@@ -354,7 +354,7 @@ bool Network::OnRaknetReceive(Packet* packet) noexcept
             const auto& stData = *reinterpret_cast<SV::PluginInitPacket*>(controlPacketPtr->data);
             if(controlPacketPtr->length != sizeof(stData)) return false;
 
-            FLog("[sv:dbg:network:pluginInit] : plugin init packet "
+            Log("[sv:dbg:network:pluginInit] : plugin init packet "
                 "(bitrate:%u;mute:%hhu)", stData.bitrate, stData.mute);
 
             for(const auto& svInitCallback : Network::svInitCallbacks)
@@ -381,7 +381,7 @@ void Network::OnRaknetDisconnect() noexcept
     if(!Network::initStatus)
         return;
 
-    FLog("[sv:dbg:network:disconnect] : raknet disconnected");
+    Log("[sv:dbg:network:disconnect] : raknet disconnected");
 
     if(Network::connectionStatus != ConnectionStatus::Disconnected)
     {

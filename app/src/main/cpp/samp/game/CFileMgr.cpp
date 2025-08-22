@@ -16,7 +16,7 @@ FILE* CFileMgr::OpenFile(const char *path, const char *mode) {
     auto file = fopen(ms_path, mode);
 
     if(!file) {
-        FLog("Fail open file %s", ms_path);
+        Log("Fail open file %s", ms_path);
     }
     return file;
 }

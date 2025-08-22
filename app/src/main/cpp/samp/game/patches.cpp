@@ -82,7 +82,7 @@ void ApplyFPSPatch(uint8_t fps)
     CHook::WriteMemory(g_libGTASA + 0x70A458, "\xE9\x0F\x1E\x32", 4);
 #endif
 
-    FLog("New fps limit = %d", fps);
+    Log("New fps limit = %d", fps);
 }
 
 void DisableAutoAim()
@@ -94,7 +94,7 @@ void DisableAutoAim()
 
 void ApplySAMPPatchesInGame()
 {
-    FLog("Installing patches (ingame)..");
+    Log("Installing patches (ingame)..");
 
     /* Разблокировка карты */
     // CTheZones::ZonesVisited[100]
@@ -140,7 +140,7 @@ int32_t CWorld__FindPlayerSlotWithPedPointer(CPedGTA* pPlayersPed)
 
 void ApplyPatches_level0()
 {
-    FLog("ApplyPatches_level0");
+    Log("ApplyPatches_level0");
 
     CHook::Write(g_libGTASA + (VER_x32 ? 0x006783C0 : 0x84E7A8), &CWorld::Players);
     CHook::Write(g_libGTASA + (VER_x32 ? 0x00679B5C : 0x8516D8), &CWorld::PlayerInFocus);
@@ -191,7 +191,7 @@ void ApplyPatches_level0()
 
 void ApplyGlobalPatches()
 {
-    FLog("Installing patches..");
+    Log("Installing patches..");
 
     CHook::RET("_ZN17CVehicleModelInfo17SetCarCustomPlateEv"); // default plate
 

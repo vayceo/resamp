@@ -33,7 +33,7 @@ void CCoronas::InjectHooks() {
 void CCoronas::Init() {
     {
         CCoronas__Init();
-        FLog("CCoronas::Init()");
+        Log("CCoronas::Init()");
 
         CTxdStore::ScopedTXDSlot txd{"particle"};
         //for (auto&& [tex, name, maskName] : rng::zip_view{ gpCoronaTexture, aCoronastar, coronaTexturesAlphaMasks }) { // TODO: C++23

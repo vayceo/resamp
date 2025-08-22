@@ -9,7 +9,7 @@ CJavaWrapper::CJavaWrapper(JNIEnv *env, jobject activity)
     jclass clas = env->GetObjectClass(activity);
     if(!clas)
     {
-        FLog("no clas");
+        Log("no clas");
         return;
     }
 
@@ -131,7 +131,7 @@ void CJavaWrapper::ShowDialog(int dialogStyle, int dialogID, char* title, char* 
 
 	if (!env)
 	{
-		FLog("No env");
+		Log("No env");
 		return;
 	}
 
@@ -157,7 +157,7 @@ void CJavaWrapper::exitGame() {
 
     if (!env)
     {
-        FLog("No env");
+        Log("No env");
         return;
     }
 
@@ -171,7 +171,7 @@ void CJavaWrapper::ShowEditObject() {
 
     if (!env)
     {
-        FLog("No env");
+        Log("No env");
         return;
     }
 
@@ -185,7 +185,7 @@ void CJavaWrapper::HideEditObject() {
 
     if (!env)
     {
-        FLog("No env");
+        Log("No env");
         return;
     }
 

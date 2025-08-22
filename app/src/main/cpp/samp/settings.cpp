@@ -9,7 +9,7 @@ extern CGame *pGame;
 
 CSettings::CSettings()
 {
-	FLog("Loading settings..");	
+	Log("Loading settings..");
 
 	char buff[0x7F];
 	sprintf(buff, "%sSAMP/settings.ini", g_pszStorage);
@@ -18,7 +18,7 @@ CSettings::CSettings()
 
 	if(reader.ParseError() < 0)
 	{
-		FLog("Error: can't load %s", buff);
+		Log("Error: can't load %s", buff);
 		std::terminate();
 		return;
 	}
@@ -93,7 +93,7 @@ CSettings::CSettings()
 	m_Settings.iRadarRect = reader.GetBoolean("gui", "radarrect", false);
 	m_Settings.iSkyBox = reader.GetBoolean("gui", "skybox", false);
 	m_Settings.iSnow = reader.GetBoolean("gui", "snow", false);
-	FLog("Settings loaded.");
+	Log("Settings loaded.");
 }
 
 const stSettings& CSettings::GetReadOnly()

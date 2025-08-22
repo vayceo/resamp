@@ -148,7 +148,7 @@ void PlayerTabList::performLayout()
 
 	m_tabList->setPosition(ImVec2(0.0f, header_height));
 
-	FLog("m_tabList size: %d, %d", m_tabList->size().x, m_tabList->size().y);
+	Log("m_tabList size: %d, %d", m_tabList->size().x, m_tabList->size().y);
 
 	this->setSize(m_tabList->size() + ImVec2(0.0f, header_height));
 

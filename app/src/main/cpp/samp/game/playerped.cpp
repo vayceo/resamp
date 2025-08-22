@@ -55,7 +55,7 @@ CPlayerPed::CPlayerPed(int iNum, int iSkin, float fX, float fY, float fZ, float 
     m_bHaveBulletData = false;
 
     /*if (!ScriptCommand(&create_player, &iPlayerNum, fX, fY, fZ, &m_dwGTAId)) {
-        FLog("Error: Failed to create player!");
+        Log("Error: Failed to create player!");
         return;
     }*/
 
@@ -79,7 +79,7 @@ CPlayerPed::CPlayerPed(int iNum, int iSkin, float fX, float fY, float fZ, float 
 
 	m_pPed = GamePool_Ped_GetAt(m_dwGTAId);
     if (!m_pPed) {
-        FLog("Error: Invalid m_pPed after GamePool_Ped_GetAt!");
+        Log("Error: Invalid m_pPed after GamePool_Ped_GetAt!");
         return;
     }
 	m_bytePlayerNumber = iPlayerNum;
@@ -133,7 +133,7 @@ CPlayerPed::CPlayerPed(int iNum, int iSkin, float fX, float fY, float fZ, float 
 CPlayerPed::~CPlayerPed()
 {
     auto modelId = m_pPed->m_nModelIndex;
-	FLog("Destroying PlayerPed(%d)", m_bytePlayerNumber);
+	Log("Destroying PlayerPed(%d)", m_bytePlayerNumber);
 
 	memset(&RemotePlayerKeys[m_bytePlayerNumber], 0, sizeof(PAD_KEYS));
 	// GameResetPlayerKeys
@@ -246,25 +246,25 @@ bool CPlayerPed::IsDead()
 // 0.3.7
 void CPlayerPed::TogglePlayerControllable(bool bControllable)
 {
-    FLog("TogglePlayerControllable");
+    Log("TogglePlayerControllable");
     if (!m_pPed) return;
-    FLog("TogglePlayerControllable2");
+    Log("TogglePlayerControllable2");
     if(!m_dwGTAId)return;
-    FLog("TogglePlayerControllable3");
+    Log("TogglePlayerControllable3");
     if (!IsValidGamePed(m_pPed) || !GamePool_Ped_GetAt(m_dwGTAId)) {
         return;
     }
-    FLog("TogglePlayerControllable4");
+    Log("TogglePlayerControllable4");
     //CHUD::bIsDisableControll = !bToggle;
     if(!bControllable)
     {
-        FLog("TogglePlayerControllable5");
+        Log("TogglePlayerControllable5");
         ScriptCommand(&toggle_player_controllable, m_bytePlayerNumber, 0);
         ScriptCommand(&lock_actor, m_dwGTAId, 1);
     }
     else if(bControllable)
     {
-        FLog("TogglePlayerControllable6");
+        Log("TogglePlayerControllable6");
         ScriptCommand(&toggle_player_controllable, m_bytePlayerNumber, 1);
         ScriptCommand(&lock_actor, m_dwGTAId, 0);
     }
@@ -995,7 +995,7 @@ void CPlayerPed::EnterVehicle(uint32_t dwVehicleGTAId, bool bPassenger)
 const SCRIPT_COMMAND TASK_LEAVE_ANY_CAR = { 0x0633, "i" };
 void CPlayerPed::ExitCurrentVehicle()
 {
-    FLog("ExitCurrentVehicle");
+    Log("ExitCurrentVehicle");
 
     if (!m_pPed) return;
     if(!m_dwGTAId)return;

@@ -575,7 +575,7 @@ void ServerQuit(RPCParameters *rpcParams)
 // 0.3.7
 void WorldPlayerAdd(RPCParameters *rpcParams)
 {
-	FLog("[RPC-IN] World player add");
+	Log("[RPC-IN] World player add");
 
 	unsigned char * Data = reinterpret_cast<unsigned char *>(rpcParams->input);
 	int iBitLength = rpcParams->numberOfBitsOfData;
@@ -632,7 +632,7 @@ void WorldPlayerAdd(RPCParameters *rpcParams)
 		{
 			if (pRemotePlayer->Spawn(byteTeam, iSkin, &vecPos, fRotation, dwColor, byteFightingStyle))
 			{
-                FLog("WorldPlayerAdd");
+                Log("WorldPlayerAdd");
 				pPlayerPed = pRemotePlayer->GetPlayerPed();
 				if (pPlayerPed)
 				{
@@ -927,7 +927,7 @@ void UpdateScoresPingsIPs(RPCParameters *rpcParams)
 		bsData.Read(iPlayerScore);
 		bsData.Read(iPlayerPing);
 
-		FLog("RPC_PINGIP: (%d): score: %d, ping: %d", playerId, iPlayerScore, iPlayerPing);
+		Log("RPC_PINGIP: (%d): score: %d, ping: %d", playerId, iPlayerScore, iPlayerPing);
 
 		pPlayerPool->UpdatePlayerScore(playerId, iPlayerScore);
 		pPlayerPool->UpdatePlayerPing(playerId, iPlayerPing);
@@ -1472,7 +1472,7 @@ void EditAttachedObject(RPCParameters *rpcParams) {
 
 	CObjectEditor::startEditPlayerAttach(index);
 
-	FLog("RPC: EditAttachedObject %d", index);
+	Log("RPC: EditAttachedObject %d", index);
 }
 
 void EditObject(RPCParameters *rpcParams) {
@@ -1489,7 +1489,7 @@ void EditObject(RPCParameters *rpcParams) {
 
 	CObjectEditor::startEditObject(objectId);
 
-	FLog("RPC: EditObject %d", objectId);
+	Log("RPC: EditObject %d", objectId);
 }
 
 void RegisterRPCs(RakClientInterface *pRakClient)

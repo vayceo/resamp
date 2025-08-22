@@ -27,11 +27,11 @@ inline int FindFirstFreePlayerPedSlot()
 {
     for (uint8_t x = 2; x < PLAYER_PED_SLOTS; ++x) {
         if (!bUsedPlayerSlots[x]) {
-            FLog("Found free slot: %d", x);
+            Log("Found free slot: %d", x);
             return x;
         }
     }
-    FLog("No free slot found!");
+    Log("No free slot found!");
     // Return -1 or an appropriate error code if no free slot is found
     return -1;
 }
@@ -59,7 +59,7 @@ void ApplyGlobalPatches();
 void InstallHooks();
 void CGame::StartGame()
 {
-	FLog("Starting game..");
+	Log("Starting game..");
 
 	// OnNewGameCheck
     //(( void (*)())(g_libGTASA + (VER_x32 ? 0x002A7270 + 1 : 0x365EA0)))();
@@ -82,7 +82,7 @@ void InstallWidgetHooks();
 
 void CGame::Initialize()
 {
-	FLog("CGame initializing..");
+	Log("CGame initializing..");
 
     ApplySAMPPatchesInGame();
 	GameResetRadarColors();
@@ -640,7 +640,7 @@ void LightsCreate(RpWorld* world) {
 void InitGui();
 
 bool CGame::InitialiseRenderWare() {
-    FLog("InitialiseRenderWare ..");
+    Log("InitialiseRenderWare ..");
 
     CCamera& TheCamera = *reinterpret_cast<CCamera*>(g_libGTASA + (VER_x32 ? 0x00951FA8 : 0xBBA8D0));
 

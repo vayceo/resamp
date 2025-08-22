@@ -151,7 +151,7 @@ public:
 
         auto res = (uintptr_t)dlsym(lib, sym);
         if(res == 0){
-            FLog("Error find %s", sym);
+            Log("Error find %s", sym);
             exit(0);
             return 0;
         }
@@ -171,7 +171,7 @@ public:
         auto addr = (uintptr_t)dlsym(lib, sym);
 
         if(addr == 0){
-            FLog("Error find %s", sym);
+            Log("Error find %s", sym);
             exit(0);
         }
 
@@ -221,7 +221,7 @@ public:
         auto addr = getSym(sym);
 
         if(addr == 0){
-            FLog("Error find %s", sym);
+            Log("Error find %s", sym);
             exit(0);
         }
 

@@ -49,7 +49,7 @@ void ApplyGlobalPatches();
 void ApplyPatches_level0();
 void InstallSpecialHooks();
 void InitRenderWareFunctions();
-void FLog(const char* fmt, ...);
+void Log(const char* fmt, ...);
 
 int work = 0;
 
@@ -76,7 +76,7 @@ void handler(int signum, siginfo_t *info, void* contextPtr)
 
 	if(info->si_signo == SIGSEGV)
 	{
-		FLog("SIGSEGV | Fault address: 0x%x", info->si_addr);
+		Log("SIGSEGV | Fault address: 0x%x", info->si_addr);
 
 		PRINT_CRASH_STATES(context);
 
@@ -97,7 +97,7 @@ void handler1(int signum, siginfo_t *info, void* contextPtr)
 
 	if(info->si_signo == SIGABRT)
 	{
-		FLog("SIGABRT | Fault address: 0x%x", info->si_addr);
+		Log("SIGABRT | Fault address: 0x%x", info->si_addr);
 
 		PRINT_CRASH_STATES(context);
 
@@ -118,7 +118,7 @@ void handler2(int signum, siginfo_t *info, void* contextPtr)
 
 	if(info->si_signo == SIGFPE)
 	{
-		FLog("SIGFPE | Fault address: 0x%x", info->si_addr);
+		Log("SIGFPE | Fault address: 0x%x", info->si_addr);
 
 		PRINT_CRASH_STATES(context);
 
@@ -139,7 +139,7 @@ void handler3(int signum, siginfo_t *info, void* contextPtr)
 
 	if(info->si_signo == SIGBUS)
 	{
-		FLog("SIGBUS | Fault address: 0x%x", info->si_addr);
+		Log("SIGBUS | Fault address: 0x%x", info->si_addr);
 
 		PRINT_CRASH_STATES(context);
 
@@ -183,7 +183,7 @@ void DoInitStuff()
 		pNetGame = new CNetGame("94.23.168.153", 1957, pSettings->Get().szNickName, pSettings->Get().szPassword);
 		bNetworkInited = true;
 
-        FLog("DoInitStuff end");
+        Log("DoInitStuff end");
 	}
 }
 
@@ -279,9 +279,9 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 	uintptr_t libsamp = CUtil::FindLib("libsamp.so");
 	uintptr_t libc = CUtil::FindLib("libc.so");
 
-	FLog("libGTASA.so: 0x%x", libgtasa);
-	FLog("libsamp.so: 0x%x", libsamp);
-	FLog("libc.so: 0x%x", libc);
+	Log("libGTASA.so: 0x%x", libgtasa);
+	Log("libsamp.so: 0x%x", libsamp);
+	Log("libc.so: 0x%x", libc);
 
 	char str[100];
 
@@ -334,7 +334,7 @@ uint32_t GetTickCount()
     return CTimer::m_snTimeInMillisecondsNonClipped;
 }	
 
-void FLog(const char* fmt, ...)
+void Log(const char* fmt, ...)
 {
 	char buffer[0xFF];
 	static FILE* flLog = nullptr;

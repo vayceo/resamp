@@ -45,7 +45,7 @@ extern CJavaWrapper *pJavaWrapper;
 
 CNetGame::CNetGame(const char* szHostOrIp, int iPort, const char *szPlayerName, const char* szPass)
 {
-	FLog("CNetGame initializing..");
+	Log("CNetGame initializing..");
 
 	// voice
 	//Network::OnRaknetConnect(szHostOrIp, iPort);
@@ -340,7 +340,7 @@ void CNetGame::Packet_CustomRPC(Packet *p) {
 
     switch (rpcID) {
         case 99: {
-            FLog("RPC_CHECK_CASH");
+            Log("RPC_CHECK_CASH");
             uint8_t bLen, bLen1;
             uint16_t bVersion;
             char szText[30];
@@ -924,7 +924,7 @@ void CNetGame::Packet_MarkerSync(Packet *pkt)
 /*
 void CNetGame::Packet_VoiceChannelOpenReply(Packet* pkt)
 {
-	FLog("Packet_VoiceChannelOpenReply");
+	Log("Packet_VoiceChannelOpenReply");
 
 	if (!pVoice || !GetGameState() == GAMESTATE_CONNECTED) return;
 

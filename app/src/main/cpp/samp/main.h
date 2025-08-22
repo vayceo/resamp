@@ -39,7 +39,7 @@ extern JavaVM* javaVM;
 uint32_t GetTickCount();
 void LogVoice(const char* fmt, ...);
 
-void FLog(const char* fmt, ...);
+void Log(const char* fmt, ...);
 void MyLog(const char* fmt, ...);
 void MyLog2(const char* fmt, ...);
 void ChatLog(const char* fmt, ...);
